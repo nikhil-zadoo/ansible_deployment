@@ -6,3 +6,5 @@ deploy => deploy1 + deploy2
 webservers => Ansible group having list of APACHE webservers  
 nagios => Nagios server HOSTNAME  
 nagios_srv => Service name of nagios monitoring the application server  
+  
+ansible-playbook deploy.yml
