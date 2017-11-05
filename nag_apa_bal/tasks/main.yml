@@ -2,7 +2,7 @@
   nagios:
    host: '{{ inventory_hostname }}'
    action: command
-   command: ADD_SVC_COMMENT;{{ inventory_hostname }};check tomcat;1;ansible;deployment going on
+   command: ADD_SVC_COMMENT;{{ inventory_hostname }};{{ nagios_srv }};1;ansible;deployment going on
   delegate_to: "{{ nagios }}"
 
 
@@ -10,7 +10,7 @@
   nagios:
    host: '{{ inventory_hostname }}'
    action: silence
-   service: check tomcat
+   service: '{{ nagios_srv }}'
    minutes: 120
    comment: 'adding downtime for deployment'
   delegate_to: "{{ nagios }}"
@@ -19,7 +19,7 @@
   nagios:
    host: '{{ inventory_hostname }}'
    action: command
-   command: DISABLE_SVC_EVENT_HANDLER;{{ inventory_hostname }};check tomcat
+   command: DISABLE_SVC_EVENT_HANDLER;{{ inventory_hostname }};{{ nagios_srv }}
   delegate_to: "{{ nagios }}"
 
 - name: disabling balancer manager of side "{{ side }}"
@@ -83,7 +83,7 @@
   nagios:
    host: '{{ inventory_hostname }}'
    action: unsilence
-   service: host
+   service: '{{ nagios_srv }}'
    comment: 'deleting downtime for deployment'
   delegate_to: "{{ nagios }}"
 
@@ -91,13 +91,13 @@
   nagios:
    host: '{{ inventory_hostname }}'
    action: command
-   command: ENABLE_SVC_EVENT_HANDLER;{{ inventory_hostname }};check tomcat
+   command: ENABLE_SVC_EVENT_HANDLER;{{ inventory_hostname }};{{ nagios_srv }}
   delegate_to: "{{ nagios }}"
 
 - name: Deleting comment for service on side "{{ side }}"
   nagios:
    host: '{{ inventory_hostname }}'
    action: command
-   command: DEL_ALL_SVC_COMMENTS;{{ inventory_hostname }};check tomcat
+   command: DEL_ALL_SVC_COMMENTS;{{ inventory_hostname }};{{ nagios_srv }}
   delegate_to: "{{ nagios }}"
 
