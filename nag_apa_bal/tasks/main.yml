@@ -40,8 +40,8 @@
 
 - name: copying the war file to tomcat server on side "{{ side }}"
   copy:
-   src: /home/ansible/playbooks/deployment/sample.war
-   dest: /var/lib/tomcat/webapps/
+   src: "{{ war_src }}"
+   dest: "{{ war_dst }}"
    owner: tomcat
    group: tomcat
    mode: 0755 
