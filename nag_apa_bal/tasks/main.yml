@@ -3,7 +3,7 @@
    host: '{{ inventory_hostname }}'
    action: command
    command: ADD_SVC_COMMENT;{{ inventory_hostname }};check tomcat;1;ansible;deployment going on
-  delegate_to: nikhilzadoo4b.mylabserver.com
+  delegate_to: "{{ nagios }}"
 
 
 - name: disabling nagios for side "{{ side }}"
@@ -13,14 +13,14 @@
    service: check tomcat
    minutes: 120
    comment: 'adding downtime for deployment'
-  delegate_to: nikhilzadoo4b.mylabserver.com
+  delegate_to: "{{ nagios }}"
 
 - name: disabling EVENT MANAGER for side "{{ side }}"
   nagios:
    host: '{{ inventory_hostname }}'
    action: command
    command: DISABLE_SVC_EVENT_HANDLER;{{ inventory_hostname }};check tomcat
-  delegate_to: nikhilzadoo4b.mylabserver.com
+  delegate_to: "{{ nagios }}"
 
 - name: disabling balancer manager of side "{{ side }}"
   apache24_mod_proxy:
@@ -85,19 +85,19 @@
    action: unsilence
    service: host
    comment: 'deleting downtime for deployment'
-  delegate_to: nikhilzadoo4b.mylabserver.com
+  delegate_to: "{{ nagios }}"
 
 - name: enabling EVENT MANAGER for side "{{ side }}"
   nagios:
    host: '{{ inventory_hostname }}'
    action: command
    command: ENABLE_SVC_EVENT_HANDLER;{{ inventory_hostname }};check tomcat
-  delegate_to: nikhilzadoo4b.mylabserver.com
+  delegate_to: "{{ nagios }}"
 
 - name: Deleting comment for service on side "{{ side }}"
   nagios:
    host: '{{ inventory_hostname }}'
    action: command
    command: DEL_ALL_SVC_COMMENTS;{{ inventory_hostname }};check tomcat
-  delegate_to: nikhilzadoo4b.mylabserver.com
+  delegate_to: "{{ nagios }}"
 
