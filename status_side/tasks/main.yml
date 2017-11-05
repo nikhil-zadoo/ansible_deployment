@@ -1,13 +1,3 @@
-#- name: Showing the status of tomcat of side "{{ side }}"
-#  raw: service tomcat status
-#  register: out
-#  ignore_errors: yes
-
-#- name: identifying the status of tomcat instances not running for side "{{ side }}"
-#  debug:
-#   msg: "{{ inventory_hostname }} is not running"
-#  when: out.stdout.find("active (running)") == -1
-
 - name: Capturing the status of tomcat of side "{{ side }}"
   systemd: name=tomcat
   register: status_var
