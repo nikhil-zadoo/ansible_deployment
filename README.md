@@ -4,7 +4,7 @@ deploy1 => ANSIBLE host group for BLUE Side of App servers
 deploy2 => ANSIBLE host group for GREEN Side of App servers  
 webservers => Ansible group for APACHE webservers
   
-Variables (Include under role/vars/main.yml):    
+Variables (Include under nag_apa_bal/vars/main.yml):    
 nagios => Nagios server HOSTNAME  
 nagios_srv => Service name of nagios monitoring the application server  
 war_src => patch of source war file to be deployed  
