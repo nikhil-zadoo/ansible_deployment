@@ -1,5 +1,0 @@
-- name: wait for tomcat
-  wait_for:
-   port: 8080
-   delay: 5
-   timeout: 300
