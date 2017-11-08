@@ -16,4 +16,4 @@
 
 - name: showing the status of "DISABLE FLAG for" side "{{ side }}". It should be set to FALSE
   debug:
-   msg: "the disabled flag on balancer member is set to : {{ balancer_op | json_query('results[*].member.status.disabled') }}"
+   msg: "the disabled flag for for Apache: {{ balancer_op | json_query('results[0].member.balancer_url') | regex_findall('.*?http://(.*)?/ba.*') }} on balancer member is set to : {{ balancer_op | json_query('results[*].member.status.disabled') }}"

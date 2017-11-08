@@ -33,7 +33,7 @@
 
 - name: showing the status of "DISABLE FLAG for" side "1". It should be set to TRUE
   debug:
-   msg: "the disabled flag on balancer member is set to : {{ balancer_op | json_query('results[*].member.status.disabled') }}"
+   msg: "the disabled flag for Apache: {{ balancer_op | json_query('results[0].member.balancer_url') | regex_findall('.*?http://(.*)?/ba.*') }} on balancer member is set to : {{ balancer_op | json_query('results[*].member.status.disabled') }}"
   
 - name: stopping tomcat server on side "{{ side }}"
   systemd: name=tomcat state=stopped
@@ -61,6 +61,9 @@
   register: url_var
   ignore_errors: yes
   delegate_to: localhost
+  retries: 3
+  delay: 5
+  until: url_var|succeeded
 
 - name: Displaying deployment status of tomcat on side "{{ side }}. The status code should be 200"
   debug:
@@ -77,7 +80,7 @@
 
 - name: showing the status of "DISABLE FLAG" for side "{{ side }}". It should be set to FALSE
   debug:
-   msg: "the disabled flag on balancer member is set to : {{ balancer_op | json_query('results[*].member.status.disabled') }}"
+   msg: "the disabled flag for Apache: {{ balancer_op | json_query('results[0].member.balancer_url') | regex_findall('.*?http://(.*)?/ba.*') }} on balancer member is set to : {{ balancer_op | json_query('results[*].member.status.disabled') }}"
 
 - name: enabling nagios for side "{{ side }}"
   nagios:
